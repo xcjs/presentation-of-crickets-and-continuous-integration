@@ -1,0 +1,9 @@
+.reveal section.slide-technical-requirements td {
+    vertical-align: top;
+}
+
+.reveal section.slide-technical-requirements img {
+    display: block;
+    height: 10vh;
+    width: auto;
+}
