@@ -7,3 +7,15 @@
     height: 10vh;
     width: auto;
 }
+
+
+
+.reveal section.slide-libraries td {
+    vertical-align: top;
+}
+
+.reveal section.slide-libraries img {
+    display: block;
+    height: 10vh;
+    width: auto;
+}
