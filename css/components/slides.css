@@ -1,3 +1,13 @@
+.reveal section li>small {
+    vertical-align: middle;
+}
+
+.reveal section .row.space-evenly {
+    justify-content: space-evenly;
+}
+
+
+
 .reveal section.slide-technical-requirements td {
     vertical-align: top;
 }
@@ -17,5 +27,14 @@
 .reveal section.slide-libraries img {
     display: block;
     height: 10vh;
+    width: auto;
+}
+
+
+
+.reveal section.slide-supported-hardware img {
+    display: block;
+    height: 10vh;
+    margin: auto;
     width: auto;
 }
