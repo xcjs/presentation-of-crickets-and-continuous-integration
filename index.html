@@ -345,20 +345,50 @@
 						</div>
 					</div>
 				</section>
+			</section>
+			<section>
 				<section>
-					<h2>Reading the DHT-22</h2>
-					<p>
-						<small>
-							(Temperature/Humidity)
-						</small>
-					</p>
-					<p>
-						TODO: Code sample here.
-					</p>
+					<h2>
+						Code Samples
+					</h2>
 				</section>
 				<section>
 					<h2>
-						Reading the ADS1115
+						<small>
+							Reading the DHT-22
+							<br>
+							(Temperature/Humidity)
+						</small>
+					</h2>
+					<pre>
+						<code data-trim data-noescape>
+							function read() {
+								var readout = {};
+
+								var deferred = new Promise(function (resolve, reject) {
+									temperatureSensor.read(22, 22, function (error, temperature, humidity) {
+								
+									if (!error) {
+										readout.temperature = temperature;
+										readout.temperatureFahrenheit = temperatureConverter.convertCtoF(temperature);
+										readout.humidity = humidity;
+
+										resolve(readout);
+									} else {
+										reject(error);
+									}});
+								});
+
+								return deferred;
+							}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>
+						<small>
+							Reading the ADS1115
+						</small>
 					</h2>
 					<p>
 						<small>
