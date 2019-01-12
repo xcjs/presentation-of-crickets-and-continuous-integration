@@ -384,6 +384,9 @@
 							Reading the DHT-22
 						</small>
 					</h2>
+					<h3>
+						<small>TemperatureSensorReader.js</small>
+					</h3>
 					<pre><code data-trim data-noescape class="javascript">
 						var deferred = 	new Promise(function (resolve, reject) {
 							temperatureSensor.read(22, 22, 
@@ -408,6 +411,9 @@
 							Reading the ADS1115
 						</small>
 					</h2>
+					<h3>
+						<small>GasSensorReader.js</small>
+					</h3>
 					<pre><code data-trim data-noescape class="javascript">
 						var deferred = new Promise(function (resolve, reject) {
 							if (gasSensor.busy) {
@@ -427,6 +433,9 @@
 				</section>
 				<section>
 					<h2>Persistence</h2>
+					<h3>
+						<small>DynamoStorage.js</small>
+					</h3>
 					<pre><code data-trim data-noescape class="javascript">
 						var docClient = new aws.DynamoDB.DocumentClient({
 							apiVersion: '2012-08-10'
