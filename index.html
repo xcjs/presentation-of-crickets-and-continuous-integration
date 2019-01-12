@@ -356,33 +356,25 @@
 					<h2>
 						<small>
 							Reading the DHT-22
-							<br>
-							(Temperature/Humidity)
 						</small>
 					</h2>
-					<pre>
-						<code data-trim data-noescape>
-							function read() {
-								var readout = {};
-
-								var deferred = new Promise(function (resolve, reject) {
-									temperatureSensor.read(22, 22, function (error, temperature, humidity) {
-								
+					<pre><code data-trim data-noescape class="javascript">
+						var deferred = 	new Promise(function (resolve, reject) {
+							temperatureSensor.read(22, 22, 
+								function (error, temperature, humidity) {
 									if (!error) {
+										var readout = {};
 										readout.temperature = temperature;
-										readout.temperatureFahrenheit = temperatureConverter.convertCtoF(temperature);
+										readout.temperatureFahrenheit = 
+										temperatureConverter.convertCtoF(temperature);
 										readout.humidity = humidity;
-
 										resolve(readout);
 									} else {
 										reject(error);
-									}});
+									}
 								});
-
-								return deferred;
-							}
-						</code>
-					</pre>
+							});
+					</code></pre>
 				</section>
 				<section>
 					<h2>
@@ -390,25 +382,39 @@
 							Reading the ADS1115
 						</small>
 					</h2>
-					<p>
-						<small>
-							(Gas Data)
-						</small>
-					</p>
-					<p>
-						TODO: Code sample here.
-					</p>
+					<pre><code data-trim data-noescape class="javascript">
+						var deferred = new Promise(function (resolve, reject) {
+							if (gasSensor.busy) {
+								deferred.reject('The gas sensor is busy.');
+								return deferred;
+							}						
+							gasSensor.readADCSingleEnded(
+								self.channel, self.progGainAmp, self.sampleRate, 
+								function (error, data) {
+									if (!error) {
+										resolve(data);
+									} else {
+										reject(error);
+									}});
+						});
+					</code></pre>
 				</section>
 				<section>
 					<h2>Persistence</h2>
-					<p>
-						<small>
-							(DyanmoDB)
-						</small>
-					</p>
-					<p>
-						TODO: Code sample here with illustration of DynamoDB structure.
-					</p>
+					<pre><code data-trim data-noescape class="javascript">
+						var docClient = new aws.DynamoDB.DocumentClient({
+							apiVersion: '2012-08-10'
+						});
+						var deferred = new Promise(function (resolve, reject) {
+							docClient.put(params, function (error, response) {
+								if (!error) {
+									resolve(response);
+								} else {
+									reject(error);
+								}
+							});
+						});
+					</code></pre>
 				</section>
 			</section>
 		</div>
@@ -436,6 +442,7 @@
 					src: 'plugin/highlight/highlight.js',
 					async: true,
 					callback: function () {
+						hljs.configure({ tabReplace: '  ' }); // 2 spaces
 						hljs.initHighlightingOnLoad();
 					}
 				}
