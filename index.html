@@ -345,6 +345,32 @@
 						</div>
 					</div>
 				</section>
+				<section>
+					<h2>BCM2835 Support</h2>
+					<p>						
+						<small>
+							napa - A helper for installing stuff without a
+							package.json with npm.
+						</small>
+					</p>
+					<h3>
+						<small>package.json</small>
+					</h3>
+					<pre><code data-trim data-noescape class="javascript">
+						{
+							...
+							"scripts": {
+								"install": "napa",
+								...
+							},
+							...
+							"napa": {
+								"bcm2835": "http://www.airspayce.com/mikem/bcm2835/bcm2835-1.55.tar.gz",
+								...
+							}
+						}
+					</code></pre>
+				</section>
 			</section>
 			<section>
 				<section>
