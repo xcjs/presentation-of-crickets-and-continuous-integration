@@ -42,6 +42,12 @@
 					on January 24th, 2019 at
 					<a href="http://leadingedje.com/">Leading EDJE</a>.
 				</small>
+				<small>
+					Available online at
+					<a href="https://xcjs.github.io/presentation-of-crickets-and-continuous-integration/">
+						https://xcjs.github.io/presentation-of-crickets-and-continuous-integration/
+					</a>
+				</small>
 			</section>
 			<section>
 				<h2>
@@ -139,7 +145,7 @@
 					<h2>The Adventure Begins...</h2>
 				</section>
 				<section class="slide-technical-requirements">
-					<h2>Technical Requirements</h2>
+					<h3>Technical Requirements</h3>
 					<table>
 						<tr>
 							<th>
@@ -203,9 +209,9 @@
 					</table>
 				</section>
 				<section class="slide-libraries">
-					<h2>
+					<h3>
 						Libraries
-					</h2>
+					</h3>
 					<table>
 						<tr>
 							<td>
@@ -275,11 +281,19 @@
 							</td>
 						</tr>
 					</table>
+					<aside class="notes">
+						<ul>
+							<li>
+								Native node modules require Python 2 and a
+								set of C/C++ compilers.
+							</li>
+						</ul>
+					</aside>
 				</section>
 				<section class="slide-supported-hardware">
-					<h2>
+					<h3>
 						Supported Hardware
-					</h2>
+					</h3>
 					<div class="row space-evenly">
 						<div>
 							<img src="images/raspberry-pi-zero-w.png" alt="Raspberry Pi Zero W">
@@ -342,8 +356,20 @@
 									</small>
 								</li>
 							</ul>
-						</div>
+						</div>						
 					</div>
+					<aside class="notes">
+						<ul>
+							<li>
+								Development was performed on multiple Windows 
+								and Linux x86_64 devices.
+							</li>
+							<li>
+								Most of the project was built and tested without
+								a physical Raspberry Pi prototype.
+							</li>
+						</ul>
+					</aside>
 				</section>				
 			</section>
 			<section>
@@ -353,16 +379,20 @@
 					</h2>
 				</section>
 				<section>
-					<h2>BCM2835 Support</h2>
+					<h3>
+						<small>							
+							BCM2835 Support
+						</small>
+					</h3>
 					<p>
 						<small>
 							napa - A helper for installing stuff without a
 							package.json with npm.
 						</small>
 					</p>
-					<h3>
+					<h4>
 						<small>package.json</small>
-					</h3>
+					</h4>
 					<pre><code data-trim data-noescape class="javascript">
 						{
 							...
@@ -377,16 +407,31 @@
 							}
 						}
 					</code></pre>
+					<aside class="notes">
+						<ul>
+							<li>
+								Post-install hook.
+							</li>
+							<li>
+								Napa extracts archives.
+							</li>
+							<li>
+								Places files inside node_modules.
+							</li>
+						</ul>							
+					</aside>
 				</section>
 				<section>
-					<h2>
+					<h3>
 						<small>
 							Reading the DHT-22
 						</small>
-					</h2>
-					<h3>
-						<small>TemperatureSensorReader.js</small>
 					</h3>
+					<h4>
+						<small>
+							TemperatureSensorReader.js
+						</small>
+					</h4>
 					<pre><code data-trim data-noescape class="javascript">
 						var deferred = 	new Promise(function (resolve, reject) {
 							temperatureSensor.read(22, 22, 
@@ -406,14 +451,16 @@
 					</code></pre>
 				</section>
 				<section>
-					<h2>
+					<h3>
 						<small>
 							Reading the ADS1115
 						</small>
-					</h2>
-					<h3>
-						<small>GasSensorReader.js</small>
 					</h3>
+					<h4>
+						<small>
+							GasSensorReader.js
+						</small>
+					</h4>
 					<pre><code data-trim data-noescape class="javascript">
 						var deferred = new Promise(function (resolve, reject) {
 							if (gasSensor.busy) {
@@ -432,10 +479,12 @@
 					</code></pre>
 				</section>
 				<section>
-					<h2>Persistence</h2>
 					<h3>
-						<small>DynamoStorage.js</small>
+						Persistence
 					</h3>
+					<h4>
+						<small>DynamoStorage.js</small>
+					</h4>
 					<pre><code data-trim data-noescape class="javascript">
 						var docClient = new aws.DynamoDB.DocumentClient({
 							apiVersion: '2012-08-10'
