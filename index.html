@@ -375,7 +375,7 @@
 			<section>
 				<section>
 					<h2>
-						Hardware Utilization
+						Hardware Utilization and Services
 					</h2>
 				</section>
 				<section>
@@ -474,6 +474,13 @@
 							}, 2000); // Maximum 2 second readout interval.
 						}
 					</code></pre>
+					<aside class="notes">
+						<ul>
+							<li>
+								Mention duck-typing.
+							</li>
+						</ul>
+					</aside>
 				</section>
 				<section>
 					<h3>
@@ -528,10 +535,14 @@
 				</section>
 				<section>
 					<h3>
-						Persistence
+						<small>
+							Persistence
+						</small>
 					</h3>
 					<h4>
-						<small>DynamoStorage.js</small>
+						<small>
+							DynamoStorage.js
+						</small>
 					</h4>
 					<pre><code data-trim data-noescape class="javascript">
 						var docClient = new aws.DynamoDB.DocumentClient({
