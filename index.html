@@ -453,7 +453,32 @@
 				<section>
 					<h3>
 						<small>
-							Reading the ADS1115
+							Mocking the DHT-22
+						</small>
+					</h3>
+					<h4>
+						<small>
+							MockTemperatureSensor.js
+						</small>
+					</h4>
+					<pre><code data-trim data-noescape class="javascript">
+						function read(dhtModel, gpio, callback) {	
+							// ...							
+							var temperature = getRandomInt(15, 60);
+							var humidity = getRandomInt(0, 100);
+
+							// ...
+
+							setTimeout(function () {
+								callback(error, temperature, humidity);
+							}, 2000); // Maximum 2 second readout interval.
+						}
+					</code></pre>
+				</section>
+				<section>
+					<h3>
+						<small>
+							Reading the MQ-2
 						</small>
 					</h3>
 					<h4>
@@ -476,6 +501,29 @@
 										reject(error);
 									}});
 						});
+					</code></pre>
+				</section>
+				<section>
+					<h3>
+						<small>
+							Mocking the MQ-2
+						</small>
+					</h3>
+					<h4>
+						<small>
+							MockGasSensor.js
+						</small>
+					</h4>
+					<pre><code data-trim data-noescape class="javascript">
+						function readADCSingleEnded(
+							channel, progGainAmp, sampleRate, callback) {
+							// ...
+
+							var gasLevel = getRandomInt(0, 65000);
+							callback(null, gasLevel);
+
+							// ...
+						}
 					</code></pre>
 				</section>
 				<section>
