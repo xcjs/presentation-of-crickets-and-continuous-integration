@@ -617,6 +617,29 @@
 				<section>
 					<h3>
 						<small>
+							MainView.js
+						</small>
+					</h3>
+					<pre><code data-trim data-noescape class="javascript">
+						// ...						
+						const choices = [
+							'Manage WiFi Connection',
+							'About Elise'
+						];			
+						const question = {
+							name: 'main',
+							message: 'Select an option below using the arrow keys ' + 
+								'on your keyboard and then press Enter: ',
+							type: 'list',
+							choices: self.choices
+						};
+						
+						return inquirer.prompt([question]);
+					</code></pre>
+				</section>
+				<section>
+					<h3>
+						<small>
 							WiFi Configuration
 						</small>
 					</h3>
@@ -629,6 +652,30 @@
 						<img src="images/elise-wifi-menu.png" alt="Elise's WiFi Menu">
 					</h4>
 				</section>				
+				<section>
+					<h3>
+						<small>
+							WifiController.js
+						</small>
+					</h3>
+					<pre><code data-trim data-noescape class="javascript">
+						var deferred = new Promise(function (resolve, reject) {
+							wifiService.scan(function (error, networks) {
+							if (!error) {
+								view.showMainMenu(networks).then
+									(promptForWifiPassword, showMainMenu)
+									.then(connectToWifi, checkIfBack).then(
+										function(connectedNetwork) {
+											resolve(connectedNetwork);
+									}, function (error) {
+									reject('...');
+								});
+							} else {
+								reject('...');
+							}});
+						});
+					</code></pre>
+				</section>
 			</section>
 		</div>
 	</div>
