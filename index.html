@@ -691,7 +691,7 @@
 							copy.
 						</div>
 						<div class="message message-received fragment fade-down">
-							Can't you do make like an .exe or something?
+							Can't you make like an .exe or something?
 						</div>
 						<div class="message message-sent fragment fade-down">
 							Maybe? I'm not sure.
@@ -700,11 +700,42 @@
 				</section>
 				<section>
 					<h3>Nexe</h3>
+					<h4>
+						Create a single executable out of your node.js apps
+					</h4>
 					<p>
 						<a href="https://github.com/nexe/nexe">
 							https://github.com/nexe/nexe
 						</a>
 					</p>
+					<aside class="notes">
+						<ul>
+							<li>
+								Mention pkg as an alternative
+							</li>
+							<li>
+								Nexe embeds native modules, pkg does not.
+							</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<img src="images/nexe.gif" alt="Animaed Nexe Example">
+				</section>
+				<section>
+					<h3>
+						<small>
+							package.json
+						</small>
+					</h3>
+					<pre><code data-trim data-noescape class="javascript">
+						// ...
+						"scripts": {
+							// ...
+							"build": "npx nexe --build index.js -o bin/elise",
+							// ...
+						}
+					</code></pre>
 				</section>
 			</section>
 		</div>
