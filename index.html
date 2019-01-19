@@ -356,12 +356,12 @@
 									</small>
 								</li>
 							</ul>
-						</div>
+						</div>						
 					</div>
 					<aside class="notes">
 						<ul>
 							<li>
-								Development was performed on multiple Windows
+								Development was performed on multiple Windows 
 								and Linux x86_64 devices.
 							</li>
 							<li>
@@ -370,7 +370,7 @@
 							</li>
 						</ul>
 					</aside>
-				</section>
+				</section>				
 			</section>
 			<section>
 				<section>
@@ -380,7 +380,7 @@
 				</section>
 				<section>
 					<h3>
-						<small>
+						<small>							
 							BCM2835 Support
 						</small>
 					</h3>
@@ -418,7 +418,7 @@
 							<li>
 								Places files inside node_modules.
 							</li>
-						</ul>
+						</ul>							
 					</aside>
 				</section>
 				<section>
@@ -434,12 +434,12 @@
 					</h4>
 					<pre><code data-trim data-noescape class="javascript">
 						var deferred = 	new Promise(function (resolve, reject) {
-							temperatureSensor.read(22, 22,
+							temperatureSensor.read(22, 22, 
 								function (error, temperature, humidity) {
 									if (!error) {
 										var readout = {};
 										readout.temperature = temperature;
-										readout.temperatureFahrenheit =
+										readout.temperatureFahrenheit = 
 										temperatureConverter.convertCtoF(temperature);
 										readout.humidity = humidity;
 										resolve(readout);
@@ -462,8 +462,8 @@
 						</small>
 					</h4>
 					<pre><code data-trim data-noescape class="javascript">
-						function read(dhtModel, gpio, callback) {
-							// ...
+						function read(dhtModel, gpio, callback) {	
+							// ...							
 							var temperature = getRandomInt(15, 60);
 							var humidity = getRandomInt(0, 100);
 
@@ -498,9 +498,9 @@
 							if (gasSensor.busy) {
 								deferred.reject('The gas sensor is busy.');
 								return deferred;
-							}
+							}						
 							gasSensor.readADCSingleEnded(
-								self.channel, self.progGainAmp, self.sampleRate,
+								self.channel, self.progGainAmp, self.sampleRate, 
 								function (error, data) {
 									if (!error) {
 										resolve(data);
@@ -577,7 +577,7 @@
 						<div class="message message-sent fragment fade-down">
 							I'll see what I can do.
 						</div>
-					</div>
+					</div>					
 				</section>
 				<section>
 					<h3>
@@ -587,7 +587,7 @@
 					</h3>
 					<ul>
 						<li>
-							Provide WiFi configuration through the utility (now
+							Provide WiFi configuration through the utility (now 
 							dubbed "Elise")
 						</li>
 						<li>
@@ -617,29 +617,25 @@
 				<section>
 					<h3>
 						<small>
-							Accepting User Input (Code)
+							MainView.js
 						</small>
-						<h4>
-							<small>
-								MainView.js
-							</small>
-						</h4>
-						<pre><code data-trim data-noescape class="javascript">
-							function show() {
-								// ...
-
-								const question = {
-									name: 'main',
-									message: 'Select an option below using the arrow keys on your keyboard and then press Enter: ',
-									type: 'list',
-									choices: self.choices
-								};
-
-								// Returns a promise.
-								return inquirer.prompt([question]);
-							}
-						</code></pre>
 					</h3>
+					<pre><code data-trim data-noescape class="javascript">
+						// ...						
+						const choices = [
+							'Manage WiFi Connection',
+							'About Elise'
+						];			
+						const question = {
+							name: 'main',
+							message: 'Select an option below using the arrow keys ' + 
+								'on your keyboard and then press Enter: ',
+							type: 'list',
+							choices: self.choices
+						};
+						
+						return inquirer.prompt([question]);
+					</code></pre>
 				</section>
 				<section>
 					<h3>
@@ -655,19 +651,92 @@
 						</small>
 						<img src="images/elise-wifi-menu.png" alt="Elise's WiFi Menu">
 					</h4>
-				</section>
+				</section>				
 				<section>
 					<h3>
 						<small>
-							WiFi Configuration (Code)
+							WifiController.js
 						</small>
 					</h3>
+					<pre><code data-trim data-noescape class="javascript">
+						var deferred = new Promise(function (resolve, reject) {
+							wifiService.scan(function (error, networks) {
+							if (!error) {
+								view.showMainMenu(networks).then
+									(promptForWifiPassword, showMainMenu)
+									.then(connectToWifi, checkIfBack).then(
+										function(connectedNetwork) {
+											resolve(connectedNetwork);
+									}, function (error) {
+									reject('...');
+								});
+							} else {
+								reject('...');
+							}});
+						});
+					</code></pre>
 				</section>
 			</section>
 			<section>
 				<section>
-
+					<h2>
+						The Deal is Altered Further
+					</h2>
 				</section>
+				<section>
+					<div class="messenger-conversation">
+						<div class="message message-received fragment fade-down">
+							I got the WiFi working, but I don't know what to do
+							with all these files, and they take forever to
+							copy.
+						</div>
+						<div class="message message-received fragment fade-down">
+							Can't you make like an .exe or something?
+						</div>
+						<div class="message message-sent fragment fade-down">
+							Maybe? I'm not sure.
+						</div>
+					</div>
+				</section>
+				<section>
+					<h3>Nexe</h3>
+					<h4>
+						Create a single executable out of your node.js apps
+					</h4>
+					<p>
+						<a href="https://github.com/nexe/nexe">
+							https://github.com/nexe/nexe
+						</a>
+					</p>
+					<aside class="notes">
+						<ul>
+							<li>
+								Mention pkg as an alternative
+							</li>
+							<li>
+								Nexe embeds native modules, pkg does not.
+							</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<img src="images/nexe.gif" alt="Animaed Nexe Example">
+				</section>
+				<section>
+					<h3>
+						<small>
+							package.json
+						</small>
+					</h3>
+					<pre><code data-trim data-noescape class="javascript">
+						// ...
+						"scripts": {
+							// ...
+							"build": "npx nexe --build index.js -o bin/elise",
+							// ...
+						}
+					</code></pre>
+				</section>				
 			</section>
 		</div>
 	</div>
