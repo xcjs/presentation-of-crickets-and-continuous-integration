@@ -356,12 +356,12 @@
 									</small>
 								</li>
 							</ul>
-						</div>						
+						</div>
 					</div>
 					<aside class="notes">
 						<ul>
 							<li>
-								Development was performed on multiple Windows 
+								Development was performed on multiple Windows
 								and Linux x86_64 devices.
 							</li>
 							<li>
@@ -370,7 +370,7 @@
 							</li>
 						</ul>
 					</aside>
-				</section>				
+				</section>
 			</section>
 			<section>
 				<section>
@@ -380,7 +380,7 @@
 				</section>
 				<section>
 					<h3>
-						<small>							
+						<small>
 							BCM2835 Support
 						</small>
 					</h3>
@@ -418,7 +418,7 @@
 							<li>
 								Places files inside node_modules.
 							</li>
-						</ul>							
+						</ul>
 					</aside>
 				</section>
 				<section>
@@ -434,12 +434,12 @@
 					</h4>
 					<pre><code data-trim data-noescape class="javascript">
 						var deferred = 	new Promise(function (resolve, reject) {
-							temperatureSensor.read(22, 22, 
+							temperatureSensor.read(22, 22,
 								function (error, temperature, humidity) {
 									if (!error) {
 										var readout = {};
 										readout.temperature = temperature;
-										readout.temperatureFahrenheit = 
+										readout.temperatureFahrenheit =
 										temperatureConverter.convertCtoF(temperature);
 										readout.humidity = humidity;
 										resolve(readout);
@@ -462,8 +462,8 @@
 						</small>
 					</h4>
 					<pre><code data-trim data-noescape class="javascript">
-						function read(dhtModel, gpio, callback) {	
-							// ...							
+						function read(dhtModel, gpio, callback) {
+							// ...
 							var temperature = getRandomInt(15, 60);
 							var humidity = getRandomInt(0, 100);
 
@@ -498,9 +498,9 @@
 							if (gasSensor.busy) {
 								deferred.reject('The gas sensor is busy.');
 								return deferred;
-							}						
+							}
 							gasSensor.readADCSingleEnded(
-								self.channel, self.progGainAmp, self.sampleRate, 
+								self.channel, self.progGainAmp, self.sampleRate,
 								function (error, data) {
 									if (!error) {
 										resolve(data);
@@ -577,7 +577,7 @@
 						<div class="message message-sent fragment fade-down">
 							I'll see what I can do.
 						</div>
-					</div>					
+					</div>
 				</section>
 				<section>
 					<h3>
@@ -587,7 +587,7 @@
 					</h3>
 					<ul>
 						<li>
-							Provide WiFi configuration through the utility (now 
+							Provide WiFi configuration through the utility (now
 							dubbed "Elise")
 						</li>
 						<li>
@@ -621,19 +621,19 @@
 						</small>
 					</h3>
 					<pre><code data-trim data-noescape class="javascript">
-						// ...						
+						// ...
 						const choices = [
 							'Manage WiFi Connection',
 							'About Elise'
-						];			
+						];
 						const question = {
 							name: 'main',
-							message: 'Select an option below using the arrow keys ' + 
+							message: 'Select an option below using the arrow keys ' +
 								'on your keyboard and then press Enter: ',
 							type: 'list',
 							choices: self.choices
 						};
-						
+
 						return inquirer.prompt([question]);
 					</code></pre>
 				</section>
@@ -651,7 +651,7 @@
 						</small>
 						<img src="images/elise-wifi-menu.png" alt="Elise's WiFi Menu">
 					</h4>
-				</section>				
+				</section>
 				<section>
 					<h3>
 						<small>
@@ -736,7 +736,111 @@
 							// ...
 						}
 					</code></pre>
-				</section>				
+					<pre><code data-trim data-noescape class="bash">
+						$ npm run build
+					</code></pre>
+				</section>
+				<section>
+					<h3>
+						<small>
+							Nexe Benefits
+						</small>
+					</h3>
+					<ul>
+						<li>
+							Single-file deployment
+						</li>
+						<li>
+							Includes embedding native modules (*.node files)
+						</li>
+						<li>
+							Bundles known working version of the Node runtime
+							with your application
+						</li>
+						<li>
+							Runtime can be upgraded anytime during a normal
+							deployment
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section>
+				<section>
+					<img src="images/gitlab.svg" alt="GitLab Logo">
+					<h2>
+						GitLab and Continuous Integration
+					</h2>
+				</section>
+				<section>
+					<h3>
+						CI Pipelines
+					</h3>
+					<div class="row space-evenly">
+						<h4>
+							Auto DevOps
+						</h4>
+						<h4>
+							.gitlab-ci.yml
+						</h4>
+					</div>
+				</section>
+				<section>
+					<h3>
+						Auto DevOps
+					</h3>
+					<p>
+						Pre-configured pipeline centered around
+						scalable web applictions.
+					</p>
+					<ul>
+						<li>
+							<a href="https://kubernetes.io/docs/home/">
+								Kubernetes
+							</a>
+						</li>
+						<li>
+							<a href="https://docs.helm.sh/">
+								Helm
+							</a>
+						</li>
+						<li>
+							<a href="https://docs.docker.com/">
+								Docker
+							</a>
+						</li>
+						<li>
+							<a href="https://docs.gitlab.com/runner/">
+								GitLab Runner
+							</a>
+						</li>
+						<li>
+							<a href="https://prometheus.io/docs/introduction/overview/">
+								Prometheus
+							</a>
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h3>
+						.gitlab-ci
+					</h3>
+					<p>
+						In-repository configuration file for custom CI
+						pipelines.
+					</p>
+					<ul>
+						<li>
+
+						</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li>
+								Can be customized or updated per-branch.
+							</li>
+						</ul>
+					</aside>
+				</section>
 			</section>
 		</div>
 	</div>
