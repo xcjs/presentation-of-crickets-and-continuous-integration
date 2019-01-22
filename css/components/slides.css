@@ -1,4 +1,4 @@
-.reveal section > img {
+.reveal section>img {
     display: block;
     margin: auto;
 }
@@ -43,5 +43,12 @@
     display: block;
     height: 10vh;
     margin: auto;
+    width: auto;
+}
+
+.reveal section.slide-gitlab-runner-devices img {
+    display: block;
+    margin: auto;
+    height: 20vh;
     width: auto;
 }
