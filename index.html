@@ -721,6 +721,14 @@
 				</section>
 				<section>
 					<img src="images/nexe.gif" alt="Animaed Nexe Example">
+					<aside class="notes">
+						<ul>
+							<li>
+								Nexe supports input via stdin as well as
+								command line parameters.
+							</li>
+						</ul>
+					</aside>
 				</section>
 				<section>
 					<h3>
@@ -773,6 +781,42 @@
 				</section>
 				<section>
 					<h3>
+						GitLab
+					</h3>
+					<p>
+						<blockquote>
+							<a href="https://about.gitlab.com/">
+								GitLab
+							</a>
+							is a single application for the entire
+							software development lifecycle. From project
+							planning and source code management to CI/CD,
+							monitoring and security.
+						</blockquote>
+					</p>
+					<aside class="notes">
+						<ul>
+							<li>
+								Can be self-hosted or used as a SaaS
+							</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<h3>
+						Gitlab Runner
+					</h3>
+					<img src="images/gitlab-runner.png" alt="GitLab Runner Logo">
+					<aside class="notes">
+						<ul>
+							<li>
+								Mention support of tags, which will come later.
+							</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<h3>
 						CI Pipelines
 					</h3>
 					<div class="row space-evenly">
@@ -822,7 +866,7 @@
 				</section>
 				<section>
 					<h3>
-						.gitlab-ci
+						.gitlab-ci.yml
 					</h3>
 					<p>
 						In-repository configuration file for custom CI
@@ -830,13 +874,248 @@
 					</p>
 					<ul>
 						<li>
-
+							<a href="https://docs.gitlab.com/runner/executors/ssh.html">
+								SSH
+							</a>
+						</li>
+						<li>
+							<a href="https://docs.gitlab.com/runner/executors/shell.html">
+								Shell
+							</a>
+						</li>
+						<li>
+							<a href="https://docs.gitlab.com/runner/executors/parallels.html">
+								Parallels
+							</a>
+						</li>
+						<li>
+							<a href="https://docs.gitlab.com/runner/executors/virtualbox.html">
+								VirtualBox
+							</a>
+						</li>
+						<li>
+							<a href="https://docs.gitlab.com/runner/executors/docker.html">
+								Docker
+							</a>
+						</li>
+						<li>
+							<a href="https://docs.gitlab.com/runner/executors/docker_machine.html">
+								Docker Machine (auto-scaling)
+							</a>
+						</li>
+						<li>
+							<a href="https://docs.gitlab.com/runner/executors/kubernetes.html">
+								Kubernetes
+							</a>
 						</li>
 					</ul>
 					<aside class="notes">
 						<ul>
 							<li>
-								Can be customized or updated per-branch.
+								Can be customized or updated per-branch and
+								through source control.
+							</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<h3>
+						GitLab CI Structure
+					</h3>
+					<ul>
+						<li>
+							Pipeline
+							<ul>
+								<li>
+									Stages
+									<ul>
+										<li>
+											Jobs
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>
+						Elise's .gitlab-ci.yml
+					</h2>
+				</section>
+				<section>
+					<h3>
+						<small>
+							Stages
+						</small>
+					</h3>
+					<pre><code data-trim data-noescape>
+						stages:
+						- Setup
+						- Analyze
+						- Test
+						- Build
+						- Stage
+					</code></pre>
+				</section>
+				<section>
+					<h3>
+						<small>
+							Cache Configuration
+						</small>
+					</h3>
+					<pre><code data-trim data-noescape>
+						cache:
+						  untracked: true
+						  key: "$CI_COMMIT_REF_NAME"
+						  paths:
+						    - node_modules/
+					</code></pre>
+					<aside class="notes">
+						<ul>
+							<li>
+								Artifacts are a better alternative as caches are
+								limited per runner.
+							</li>
+							<li>
+								Mention GitLab CI variables -
+								$CI_COMMIT_REF_NAME refers to the current
+								commit hash.
+							</li>
+							<li>
+								Caches are removed after every job and copied
+								into the workspace at the beginning of the next
+								job.
+							</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<h3>
+						<small>
+							Setup
+						</small>
+					</h3>
+					<pre><code data-trim data-noescape>
+						Setup:
+							stage: Setup
+							script:
+								- npm install
+								- cd ./node_modules/bcm2835
+								- ./configure
+								- make
+								- sudo make check
+								- sudo make install
+								- cd ../../
+								- npm rebuild
+					</code></pre>
+				</section>
+				<section>
+					<h3>
+						<small>
+							Analysis
+						</small>
+					</h3>
+					<pre><code data-trim data-noescape>
+						Analysis:
+							stage: Analyze
+							script:
+								- npm run lint
+								- npm audit
+					</code></pre>
+				</section>
+				<section>
+					<h3>
+						<small>
+							Test
+						</small>
+					</h3>
+					<pre><code data-trim data-noescape>
+						Test:
+							stage: Test
+							script:
+								- npm test
+					</code></pre>
+					<small>
+						package.json
+					</small>
+					<pre><code data-trim data-noescape class="javascript">
+						// ...
+						"scripts": {
+							// ...
+							"test": "npx nyc --reporter=html --reporter=text mocha
+								--recursive",
+							// ...
+						},
+						// ...
+					</code></pre>
+					<aside class="notes">
+						<ul>
+							<li>
+								nyc = Istanbul command line interface
+								(JavaScript test coverage tool)
+							</li>
+							<li>
+								<strong>
+									mocha
+								</strong>
+								was the test framework with
+								<strong>
+									sinon
+								</strong>
+								as the mocking framework.
+							</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<h3>
+						<small>
+							Build
+						</small>
+					</h3>
+					<pre><code data-trim data-noescape>
+						Build:
+							stage: Build
+							script:
+								- npm run build
+					</code></pre>
+					<small>
+						package.json
+					</small>
+					<pre><code data-trim data-noescape class="javascript">
+						// ...
+						"scripts": {
+							// ...
+							"build": "npx nexe --build index.js -o bin/elise",
+							// ...
+						},
+						// ...
+					</code></pre>
+				</section>
+				<section>
+					<h3>
+						<small>
+							Stage
+						</small>
+					</h3>
+					<pre><code data-trim data-noescape>
+						Virtual Staging:
+							stage: Stage
+							before_script:
+								- vagrant plugin install vagrant-vbguest
+								- vagrant box update
+							script:
+								- vagrant up
+							after_script:
+								- vagrant destroy --force
+					</code></pre>
+					<aside class="notes">
+						<ul>
+							<li>
+								Would use Docker for this today.
 							</li>
 						</ul>
 					</aside>
