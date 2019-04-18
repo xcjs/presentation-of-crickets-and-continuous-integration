@@ -1,0 +1,27 @@
+@import url(./leading-edje-dark.css);
+
+body {
+    background-color: rgb(241, 240, 240);
+}
+
+.reveal {
+    color: rgb(34, 34, 34);
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+    color: rgb(34, 34, 34);
+}
+
+.reveal section img {
+    background-color: rgba(0, 0, 0, 0.25);
+    border-color: rgb(34, 34, 34);
+}
+
+.reveal a {
+    color: #64940F;
+}
