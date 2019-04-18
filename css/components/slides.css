@@ -52,3 +52,12 @@
     height: 20vh;
     width: auto;
 }
+
+
+
+.reveal section.slide-next-steps img {
+    display: block;
+    margin: auto;
+    height: 25vh;
+    width: auto;
+}
