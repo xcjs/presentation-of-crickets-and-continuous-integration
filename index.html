@@ -451,21 +451,17 @@
 						</small>
 					</h4>
 					<pre><code data-trim data-noescape class="javascript">
-						var deferred = 	new Promise(function (resolve, reject) {
-							temperatureSensor.read(22, 22,
-								function (error, temperature, humidity) {
-									if (!error) {
-										var readout = {};
-										readout.temperature = temperature;
-										readout.temperatureFahrenheit =
-										temperatureConverter.convertCtoF(temperature);
-										readout.humidity = humidity;
-										resolve(readout);
-									} else {
-										reject(error);
-									}
-								});
+						var deferred = new Promise(() => (resolve, reject) {
+							temperatureSensor.read(22, 22, // sensor model, pin
+								(err, temperature, humidity) => {
+									if (!err) {
+										resolve({
+									        temperature,
+									        humidity
+										});
+									} else { reject(err); }
 							});
+						});
 					</code></pre>
 				</section>
 				<section>
@@ -482,14 +478,15 @@
 					<pre><code data-trim data-noescape class="javascript">
 						function read(dhtModel, gpio, callback) {
 							// ...
+
 							var temperature = getRandomInt(15, 60);
 							var humidity = getRandomInt(0, 100);
 
 							// ...
 
-							setTimeout(function () {
-								callback(error, temperature, humidity);
-							}, 2000); // Maximum 2 second readout interval.
+							setTimeout(() => {
+								callback(err, temperature, humidity);
+							}, 2000); // Simulate maximum 2s readout interval.
 						}
 					</code></pre>
 					<aside class="notes">
@@ -512,19 +509,14 @@
 						</small>
 					</h4>
 					<pre><code data-trim data-noescape class="javascript">
-						var deferred = new Promise(function (resolve, reject) {
-							if (gasSensor.busy) {
-								deferred.reject('The gas sensor is busy.');
-								return deferred;
-							}
-							gasSensor.readADCSingleEnded(
-								self.channel, self.progGainAmp, self.sampleRate,
-								function (error, data) {
-									if (!error) {
-										resolve(data);
-									} else {
-										reject(error);
-									}});
+						var deferred = new Promise(() => (resolve, reject) {
+							gasSensor.readADCSingleEnded
+								(channel, progGainAmp, sampleRate,
+									(error, data) => {
+										if (!error) { resolve(data); }
+										else { reject(error); }
+									}
+								);
 						});
 					</code></pre>
 				</section>
@@ -566,14 +558,14 @@
 						var docClient = new aws.DynamoDB.DocumentClient({
 							apiVersion: '2012-08-10'
 						});
-						var deferred = new Promise(function (resolve, reject) {
-							docClient.put(params, function (error, response) {
-								if (!error) {
-									resolve(response);
-								} else {
-									reject(error);
-								}
+
+						var deferred = new Promise(() => (resolve, reject) {
+
+							docClient.put(params, () => (error, response) {
+								if (!error) { resolve(response); }
+								else { reject(error); }
 							});
+
 						});
 					</code></pre>
 				</section>
@@ -639,17 +631,17 @@
 						</small>
 					</h3>
 					<pre><code data-trim data-noescape class="javascript">
-						// ...
 						const choices = [
 							'Manage WiFi Connection',
 							'About Elise'
 						];
+
 						const question = {
 							name: 'main',
 							message: 'Select an option below using the arrow keys ' +
 								'on your keyboard and then press Enter: ',
 							type: 'list',
-							choices: self.choices
+							choices: choices
 						};
 
 						return inquirer.prompt([question]);
@@ -677,21 +669,20 @@
 						</small>
 					</h3>
 					<pre><code data-trim data-noescape class="javascript">
-						var deferred = new Promise(function (resolve, reject) {
-							wifiService.scan(function (error, networks) {
-							if (!error) {
-								view.showMainMenu(networks).then
-									(promptForWifiPassword, showMainMenu)
-									.then(connectToWifi, checkIfBack).then(
-										function(connectedNetwork) {
-											resolve(connectedNetwork);
-									}, function (error) {
-									reject('...');
-								});
-							} else {
-								reject('...');
-							}});
-						});
+						var deferred = new Promise(() => (resolve, reject) {
+							wifiService.scan(() => (err, networks) {
+								if (!err) {
+									view.showMainMenu(networks).then
+										(promptWifiPassword, showMainMenu).then(
+											connectToWifi, checkIfBack).then(
+											() => (connectedNetwork) {
+												resolve(connectedNetwork);
+										}, () => (err) {
+										reject(err);
+									});
+								} else {
+									reject(err);
+								}});});
 					</code></pre>
 				</section>
 			</section>
@@ -784,8 +775,8 @@
 							with your application
 						</li>
 						<li>
-							Runtime can be upgraded anytime during a normal
-							deployment
+							Runtime can be upgraded (or reverted) anytime during
+							a standard deployment
 						</li>
 					</ul>
 				</section>
@@ -890,8 +881,8 @@
 						.gitlab-ci.yml
 					</h3>
 					<p>
-						In-repository configuration file for custom CI
-						pipelines.
+						In-repository, per-branch configuration file for custom
+						CI pipelines.
 					</p>
 					<ul>
 						<li>
@@ -1192,6 +1183,8 @@
 							<h4>
 								<small>
 									ARMv6 / RUNNERPIZERO
+									<br>
+									&nbsp;
 								</small>
 							</h4>
 							<img src="images/raspberry-pi-zero-w.png" class="Raspberry Pi Zero W">
@@ -1200,6 +1193,8 @@
 							<h4>
 								<small>
 									ARMv8 / RUNNERPI
+									<br>
+									&nbsp;
 								</small>
 							</h4>
 							<img src="images/raspberry-pi-3.png" class="Raspberry Pi 3">
@@ -1208,9 +1203,11 @@
 							<h4>
 								<small>
 									x86_64 / USERV
+									<br>
+									(Ubuntu SERVer)
 								</small>
 							</h4>
-							<img src="images/intel-nuc.jpg" class="Intel NUC with i7">
+							<img src="images/intel-nuc.png" class="Intel NUC with i7">
 						</div>
 					</div>
 				</section>
